@@ -75,6 +75,11 @@
                     document.getElementById('result').textContent = err
                 })
             }
+
+            function reset(){
+                document.getElementById('result').textContent = '';
+                codeReader.reset();
+            }
             codeReader.getVideoInputDevices()
                 .then((videoInputDevices) => {
                     const sourceSelect = document.getElementById('sourceSelect')
@@ -89,6 +94,8 @@
 
                         sourceSelect.onchange = () => {
                             selectedDeviceId = sourceSelect.value;
+                            reset();
+                            start();
                         }
 
                         const sourceSelectPanel = document.getElementById('sourceSelectPanel')
