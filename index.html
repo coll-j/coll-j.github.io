@@ -67,19 +67,16 @@
             const codeReader = new ZXing.BrowserBarcodeReader()
             console.log('ZXing code reader initialized')
             function start(){
-                console.log('start')
-                codeReader.decodeFromVideoDevice(selectedDeviceId, 'video').then((result) => {
+                codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video').then((result) => {
                     console.log(result)
                     document.getElementById('result').textContent = result.text
                 }).catch((err) => {
-                    console.log('error coy st')
                     console.error(err)
                     document.getElementById('result').textContent = err
                 })
             }
 
             function reset(){
-                console.log('reset')
                 document.getElementById('result').textContent = '';
                 codeReader.reset();
             }
@@ -108,7 +105,7 @@
                     start()
                     
                     document.getElementById('startButton').addEventListener('click', () => {
-                        codeReader.decodeFromVideoDevice(selectedDeviceId, 'video').then((result) => {
+                        codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video').then((result) => {
                             console.log(result)
                             document.getElementById('result').textContent = result.text
                         }).catch((err) => {
