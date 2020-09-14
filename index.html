@@ -72,6 +72,7 @@
                     console.log(result)
                     document.getElementById('result').textContent = result.text
                 }).catch((err) => {
+                    console.log('error coy st')
                     console.error(err)
                     document.getElementById('result').textContent = err
                 })
@@ -107,7 +108,7 @@
                     start()
                     
                     document.getElementById('startButton').addEventListener('click', () => {
-                        codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video').then((result) => {
+                        codeReader.decodeFromVideoDevice(selectedDeviceId, 'video').then((result) => {
                             console.log(result)
                             document.getElementById('result').textContent = result.text
                         }).catch((err) => {
