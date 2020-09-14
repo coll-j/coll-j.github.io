@@ -66,17 +66,6 @@
             let selectedDeviceId;
             const codeReader = new ZXing.BrowserBarcodeReader()
             console.log('ZXing code reader initialized')
-            function start(){
-                codeReader.reset()
-                codeReader.decodeFromVideoDevice(selectedDeviceId, 'video').then((result) => {
-                    console.log(result)
-                    document.getElementById('result').textContent = result.text
-                }).catch((err) => {
-                    console.error(err)
-                    document.getElementById('result').textContent = err
-                })
-                console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
-            }
             codeReader.getVideoInputDevices()
                 .then((videoInputDevices) => {
                     const sourceSelect = document.getElementById('sourceSelect')
@@ -91,15 +80,38 @@
 
                         sourceSelect.onchange = () => {
                             selectedDeviceId = sourceSelect.value;
-                            start()
                         }
 
                         const sourceSelectPanel = document.getElementById('sourceSelectPanel')
                         sourceSelectPanel.style.display = 'block'
                     }
 
+                    codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video').then((result) => {
+                        console.log(result)
+                        document.getElementById('result').textContent = result.text
+                    }).catch((err) => {
+                        console.error(err)
+                        document.getElementById('result').textContent = err
+                    })
+                    
+                    document.getElementById('startButton').addEventListener('click', () => {
+                        codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video').then((result) => {
+                            console.log(result)
+                            document.getElementById('result').textContent = result.text
+                        }).catch((err) => {
+                            console.error(err)
+                            document.getElementById('result').textContent = err
+                        })
+                        console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+                    })
+
+                    document.getElementById('resetButton').addEventListener('click', () => {
+                        document.getElementById('result').textContent = '';
+                        codeReader.reset();
+                        console.log('Reset.')
+                    })
+
                 })
-                .then(start)
                 .catch((err) => {
                     console.error(err)
                 })
