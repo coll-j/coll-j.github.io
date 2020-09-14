@@ -67,6 +67,7 @@
             const codeReader = new ZXing.BrowserBarcodeReader()
             console.log('ZXing code reader initialized')
             function start(){
+                codeReader.reset()
                 codeReader.decodeFromVideoDevice(selectedDeviceId, 'video').then((result) => {
                     console.log(result)
                     document.getElementById('result').textContent = result.text
